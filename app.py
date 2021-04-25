@@ -32,7 +32,7 @@ df['column 3'] = (df['column 3'].astype("str")
                         .str.decode('utf-8')
                         .str.replace("ciana", "Sciana")
                         .str.replace("grny", "gorny")
-                        .str.replace("pka", "polka"))
+                        .str.replace("Pka", "polka"))
 
 df_req = (df.loc[df['column 0'] == 'PARTS_REQ'])
 df_inf = (df.loc[df['column 0'] == 'PARTS_INF'])
@@ -68,15 +68,15 @@ column_names2 = ['linia w ptx',
                  'Okleina 4',
                  'Nazwa Zlecenia',
                  'Material',
-                 'LP',
+                 'LP w F5',
                  'CNC1',
                  'CNC2']
 
 if len(df_inf) == len(df_req):
     df_summary = pd.concat([df_req, df_inf], axis=1, ignore_index=True).drop(columns=unnecesary_columns)
-    df_final = df_summary.reset_index(drop=True).sort_values(by=50).reset_index(drop=True)
+    df_final = df_summary.reset_index(drop=True).sort_values(by=3).reset_index(drop=True)
     df_final.columns = column_names2
-    df_final.to_excel(r'G:/df_summary.xlsx', index=True)
+    df_final.to_excel(r'G:/Raport.xlsx', index=True)
 else:
     print("error")
 
