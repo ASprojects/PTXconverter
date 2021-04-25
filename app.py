@@ -1,7 +1,12 @@
 import pandas as pd
 import glob
+import time
+from config import powitanie, pozegnanie
 
-path = r'G:\Convert'
+powitanie()
+time.sleep(5)
+
+path = r'D:\Ptx Converter\Zlecenie'
 all_files = glob.glob(path + "/*.PTX")
 
 li = []
@@ -13,7 +18,7 @@ for i in range(31):
 
 for filename in all_files:
     df = pd.read_csv(filename, index_col=None, header=None, skiprows=3, sep=',',
-                     error_bad_lines=False, names=list(column_names))
+                     error_bad_lines=False, encoding='latin1', names=list(column_names))
     li.append(df)
 
 df = pd.concat(li, axis=0, ignore_index=True)
@@ -29,7 +34,7 @@ df = pd.concat(li, axis=0, ignore_index=True)
 df['column 3'] = (df['column 3'].astype("str")
                         .str.normalize('NFKD')
                         .str.encode('ascii', errors='ignore')
-                        .str.decode('utf-8')
+                        .str.decode('US-ASCII')
                         .str.replace("ciana", "Sciana")
                         .str.replace("grny", "gorny")
                         .str.replace("Pka", "polka"))
@@ -76,7 +81,7 @@ if len(df_inf) == len(df_req):
     df_summary = pd.concat([df_req, df_inf], axis=1, ignore_index=True).drop(columns=unnecesary_columns)
     df_final = df_summary.reset_index(drop=True).sort_values(by=3).reset_index(drop=True)
     df_final.columns = column_names2
-    df_final.to_excel(r'G:/Raport.xlsx', index=True)
+    df_final.to_excel(r'D:/PTX Converter/Raport.xlsx', index=True)
 else:
     print("error")
 
@@ -86,3 +91,6 @@ else:
 
 # if len(df_inf) == len(df_req):
 #     df_summary = df_req.join(df_inf).to_csv(r'G:/df_summary.csv', index=True)
+
+pozegnanie()
+time.sleep(5)
