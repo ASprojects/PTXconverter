@@ -32,9 +32,19 @@ df_inf = (df.loc[df['column 0'] == 'PARTS_INF'])
 df_inf = df_inf.reset_index(drop=True)
 df_req = df_req.reset_index(drop=True)
 
+unnecesary_columns = [0, 1, 4, 61]
+for i in range(7, 33):
+    unnecesary_columns.append(i)
+for i in range(43, 47):
+    unnecesary_columns.append(i)
+for i in range(51, 59):
+    unnecesary_columns.append(i)
 
 if len(df_inf) == len(df_req):
-    df_summary = pd.concat([df_req, df_inf], axis=1, ignore_index=True).to_csv(r'G:/df_summary.csv', index=True)
+    df_summary = pd.concat([df_req, df_inf], axis=1, ignore_index=True).drop(columns=unnecesary_columns)
+    df_summary.sort_values(by=3).reset_index(drop=True).to_excel(r'G:/df_summary.xlsx', index=True)
+else:
+    print("error")
 
 
 # if len(df_inf) == len(df_req):
